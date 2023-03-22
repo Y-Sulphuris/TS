@@ -1,21 +1,20 @@
 package org.ts;
 
-import java.util.HashMap;
+public abstract class TSType extends TSComponent {
 
-public class TSType extends TSComponent {
 	private final int typeword;
 	private final String name;
 
-	private final HashMap<String, TSType> fields = new HashMap<>();
 
-	TSType(Space space, String name, int typeword) {
-		super(space);
+	public TSType(String name, int typeword) {
+		super();
 		if (typeword > TSUtils.TYPEWORD_MAX)
 			throw new IllegalArgumentException("3 bytes overflow");
 		if (name.length() > 0xFF)
 			throw new IllegalArgumentException("Byte overflow");
 		this.typeword = typeword;
 		this.name = name;
+
 	}
 
 	public int getTypeword() {
@@ -26,11 +25,13 @@ public class TSType extends TSComponent {
 		return name;
 	}
 
-	void addField(String name, TSType type) {
-		fields.put(name, type);
+
+
+
+	@Override
+	public byte[] getBytes() {
+		byte[] result = new byte[size()];
+		return result;
 	}
 
-	public TSType getFieldType(String name) {
-		return fields.get(name);
-	}
 }
