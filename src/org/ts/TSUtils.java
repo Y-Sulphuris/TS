@@ -11,9 +11,5 @@ public class TSUtils {
 
 	public static final int END_DEF = 0xFF;
 
-	public static int getTypeword(int header) {
-		return header & TYPEWORD_MAX;
-	}
-
 
 }

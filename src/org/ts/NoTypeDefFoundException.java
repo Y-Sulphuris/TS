@@ -4,6 +4,10 @@ public class NoTypeDefFoundException extends RuntimeException{
 	public NoTypeDefFoundException() {
 	}
 
+	public NoTypeDefFoundException(int typeword) {
+		this(String.valueOf(typeword));
+	}
+
 	public NoTypeDefFoundException(String message) {
 		super(message);
 	}

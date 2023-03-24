@@ -1,37 +1,28 @@
 package org.ts;
 
+import java.nio.ByteBuffer;
+
 public final class TSField extends TSComponent{
 
-
 	private final String name;
-	private final TSHeader header;
+	private final TSType type;
 
 	public String getName() {
 		return name;
 	}
-	public TSHeader getHeader() {
-		return header;
+	public TSType getType() {
+		return type;
 	}
 
-	TSField(int typeword, String name) {
-		this(new TSHeader(typeword,new byte[]{0}),name);
-	}
-	TSField(int typeword, byte[] meta, String name) {
-		this(new TSHeader(typeword,meta),name);
-	}
-	TSField(TSHeader header, String name) {
-		this.header = header;
+	TSField(TSType type, String name) {
+		this.type = type;
 		this.name = name;
 	}
 
 
-	@Override
-	public byte[] getBytes() {
-		return new byte[0];
-	}
 
 	@Override
 	public int size() {
-		return header.size() + name.length() + 1;
+		return type.size() + name.length() + 1;
 	}
 }

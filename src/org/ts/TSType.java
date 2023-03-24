@@ -1,6 +1,6 @@
 package org.ts;
 
-public abstract class TSType extends TSComponent {
+public abstract class TSType<T extends TSVar> extends TSComponent {
 
 	private final int typeword;
 	private final String name;
@@ -9,9 +9,9 @@ public abstract class TSType extends TSComponent {
 	public TSType(String name, int typeword) {
 		super();
 		if (typeword > TSUtils.TYPEWORD_MAX)
-			throw new IllegalArgumentException("3 bytes overflow");
+			throw new IllegalArgumentException("typeword (3 bytes) overflow");
 		if (name.length() > 0xFF)
-			throw new IllegalArgumentException("Byte overflow");
+			throw new IllegalArgumentException("byte overflow (type name is to long)");
 		this.typeword = typeword;
 		this.name = name;
 
@@ -21,17 +21,13 @@ public abstract class TSType extends TSComponent {
 		return typeword;
 	}
 
-	public String getName() {
+	public String getTypeName() {
 		return name;
 	}
 
 
+	public abstract T valueOf(Object value);
 
 
-	@Override
-	public byte[] getBytes() {
-		byte[] result = new byte[size()];
-		return result;
-	}
 
 }
