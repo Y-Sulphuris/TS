@@ -4,18 +4,19 @@ import org.ts.OverrideTypes;
 import org.ts.TSType;
 import org.ts.TSVar;
 
-public final class TS_qword extends TSVar {
+import java.math.BigInteger;
 
-	private final long value;
+public final class TS_dqword extends TSVar {
 
-	public TS_qword(long value) {
+	private final BigInteger value;
+
+	public TS_dqword(BigInteger value) {
 		this.value = value;
 	}
 
-
 	@Override
 	public int size() {
-		return 8;
+		return 16;
 	}
 
 	@Override
@@ -23,10 +24,12 @@ public final class TS_qword extends TSVar {
 		return value;
 	}
 
+
 	@SuppressWarnings("unchecked")
-	public static final TSType<TS_qword> type = OverrideTypes.get("qword");
+	public static final TSType<TS_dqword> type = OverrideTypes.get("dqword");
+
 	@Override
-	public TSType<TS_qword> getType() {
+	public TSType<TS_dqword> getType() {
 		return type;
 	}
 }

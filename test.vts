@@ -1,0 +1,41 @@
+#head
+
+@include<lib/gdx>
+
+#defstart
+
+type tmdf {};
+
+type [130] position {
+	int x;
+	int y;
+};
+
+type [131] player {
+	position pos;
+	position start_pos;
+};
+
+type item {
+	unsigned_byte id;
+	unsigned_short meta;
+	
+	unsigned_int amount;
+	struct<tmdf> tag;
+};
+
+player inf = {
+	pos = (4,5);
+	start_pos = (0,0);
+};
+
+
+
+item test {
+	id = 3;
+	meta = 0;
+	amount = 1;
+	tag = {
+		string8 displayname = "displayNameTest";
+	};
+}

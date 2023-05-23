@@ -30,4 +30,5 @@ public final class TS_octet extends TSVar {
 	public TSType<TS_octet> getType() {
 		return type;
 	}
+
 }

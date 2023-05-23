@@ -1,8 +1,6 @@
 package org.ts;
 
 public class NoFieldDefFoundException extends RuntimeException{
-	public NoFieldDefFoundException() {
-	}
 
 	public NoFieldDefFoundException(String message) {
 		super(message);

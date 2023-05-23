@@ -1,4 +1,4 @@
-package org.ts.primitive;
+package org.ts.types;
 
 import org.ts.TSType;
 import org.ts.vars.TS_qword;
@@ -18,5 +18,15 @@ public final class TSType_qword extends TSType<TS_qword> {
 	@Override
 	public TS_qword valueOf(Object value) {
 		return null;
+	}
+
+	@Override
+	public TS_qword defaultValue() {
+		return new TS_qword(0);
+	}
+
+	@Override
+	public boolean isPrimitive() {
+		return true;
 	}
 }

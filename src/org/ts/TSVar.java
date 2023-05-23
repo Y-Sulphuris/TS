@@ -1,6 +1,6 @@
 package org.ts;
 
-public abstract class TSVar extends TSComponent implements Cloneable{
+public abstract class TSVar implements Cloneable{
 	public abstract Object getValue();
 
 	@Override
@@ -13,5 +13,14 @@ public abstract class TSVar extends TSComponent implements Cloneable{
 	}
 
 	public abstract TSType getType();
+
+	public abstract int size();
+
+
+	@Override
+	public String toString() {
+		if (getType().isPrimitive()) return String.valueOf(getValue());
+		return super.toString();
+	}
 }
 

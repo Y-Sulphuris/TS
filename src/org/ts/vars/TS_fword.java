@@ -4,15 +4,22 @@ import org.ts.OverrideTypes;
 import org.ts.TSType;
 import org.ts.TSVar;
 
-public class TS_fword extends TSVar {
+public final class TS_fword extends TSVar {
+
+	private final int value;
+
+	public TS_fword(int value) {
+		this.value = value & 0xFFFFFF;
+	}
+
 	@Override
 	public int size() {
-		return 0;
+		return 6;
 	}
 
 	@Override
 	public Object getValue() {
-		return null;
+		return value & 0xFFFFFF;
 	}
 
 	@SuppressWarnings("unchecked")

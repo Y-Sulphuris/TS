@@ -1,4 +1,4 @@
-package org.ts.primitive;
+package org.ts.types;
 
 import org.ts.TSType;
 import org.ts.vars.TS_tword;
@@ -28,5 +28,15 @@ public final class TSType_tword extends TSType<TS_tword> {
 			var_value = BigInteger.valueOf(((Number) value).longValue());
 		} else throw new IllegalArgumentException("cannot convert " + value + "to " + getTypeName());
 		return new TS_tword(var_value);
+	}
+
+	@Override
+	public TS_tword defaultValue() {
+		return new TS_tword(BigInteger.valueOf(0));
+	}
+
+	@Override
+	public boolean isPrimitive() {
+		return true;
 	}
 }

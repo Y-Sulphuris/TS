@@ -1,8 +1,10 @@
 package org.ts.vts;
 
+import org.ts.UnexpectedTokenException;
+
 public class Token {
-	final TokenType type;
-	final String text;
+	public final TokenType type;
+	public final String text;
 
 	public Token(TokenType type, String text) {
 		this.type = type;
@@ -14,24 +16,17 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return "Token{type=" + type + ", text='" + text + "'}";
+		return "Token{" + type + (type != TokenType.EOF ? " = '" + text + "'}" : "}");
+	}
+
+	public long getNumber() {
+		if (type == TokenType.NUMBER) return Long.valueOf(text);
+		else throw new UnexpectedTokenException(this + "is not number");
+	}
+
+	public boolean isHexNumber() {
+		return type == TokenType.NUMBER && text.startsWith("0x");
 	}
 }
 
 
-enum TokenType {
-	KEYWORD,
-	NUMBER,
-	TEXT,
-	QSTART,//[
-	QEND,//]
-	OPERATOR, // = & *
-	OPEN,//{
-	CLOSE,//}
-	OPENROUND,//(
-	CLOSEROUND,//)
-	END,//;
-	EOF,//end of file
-
-	ERROR
-}

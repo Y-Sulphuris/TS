@@ -1,8 +1,6 @@
 package org.ts;
 
 public class NoTypeDefFoundException extends RuntimeException{
-	public NoTypeDefFoundException() {
-	}
 
 	public NoTypeDefFoundException(int typeword) {
 		this(String.valueOf(typeword));

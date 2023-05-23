@@ -1,5 +1,9 @@
 package org.ts;
 
+import org.ts.types.TSTypeArray;
+import org.ts.types.TSTypePointer;
+import org.ts.vars.TS_Pointer;
+
 public abstract class TSType<T extends TSVar> extends TSComponent {
 
 	private final int typeword;
@@ -28,6 +32,21 @@ public abstract class TSType<T extends TSVar> extends TSComponent {
 
 	public abstract T valueOf(Object value);
 
+	public abstract T defaultValue();
 
+	public boolean isPrimitive() {
+		return false;
+	}
 
+	public boolean isArray() {
+		return this instanceof TSTypeArray<?>;
+	}
+
+	public boolean isPointer() {
+		return this instanceof TSTypePointer;
+	}
+
+	public boolean isOneFieldType() {
+		return true;
+	}
 }
