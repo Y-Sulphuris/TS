@@ -1,6 +1,6 @@
 package org.ts.vars;
 
-import org.ts.OverrideTypes;
+import org.ts.OverriddenTypes;
 import org.ts.TSType;
 import org.ts.TSVar;
 
@@ -23,7 +23,7 @@ public final class TS_dword extends TSVar {
 
 
 	@SuppressWarnings("unchecked")
-	public static final TSType<TS_dword> type = OverrideTypes.get("dword");
+	public static final TSType<TS_dword> type = OverriddenTypes.get("dword");
 
 	@Override
 	public TSType<TS_dword> getType() {

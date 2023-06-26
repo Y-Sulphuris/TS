@@ -1,6 +1,7 @@
 package org.ts.vts;
 
 import org.ts.*;
+import org.ts.vars.TS_Structure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,9 @@ public class TokenReader {
 							throw new UnexpectedTokenException(token);
 
 						if (token.type == TokenType.OPERATOR) {
-							if (!token.text.equals("="))
+							if (!token.text.equals("=")) {
 								throw new UnexpectedTokenException(token);
+							}
 							token = nextToken();
 							String fieldTypename;
 							if (token.type == TokenType.TEXT)
@@ -82,23 +84,15 @@ public class TokenReader {
 				{
 					TSType type = space.getType(token.text);
 					String variableName;
-					Object[] values;
 					token = nextToken();
 					if (token.type == TokenType.TEXT) {
 						variableName = token.text;
 						if (!space.fieldExist(variableName)) {
 							token = nextToken();
 							if (token.type == TokenType.OPERATOR && token.text.equals("=")) {
-								token = nextToken();
-								if (token.type == TokenType.OPEN) {
-									throw new UnsupportedOperationException();
-								} else {
-									if (!type.isOneFieldType()) throw new UnexpectedTokenException(token);
-									space.defineVar(variableName,type.valueOf(token.text));
-									token = nextToken();
-									if (token.type != TokenType.END) throw new UnexpectedTokenException(token);
-								}
-
+								space.defineVar(variableName, readFieldValue(type,space));
+								//token = currentToken();
+								//if (token.type != TokenType.END) throw new UnexpectedTokenException(token);
 							}
 						} else throw new IllegalArgumentException("name " + variableName + "was already taken");
 					} else throw new UnexpectedTokenException(token);
@@ -108,19 +102,56 @@ public class TokenReader {
 					// TODO: 25.03.2023
 			}
 
-
-
-
-
-
-
 			token = nextToken();
 		}
 
 
 	}
 
+	private TSVar readFieldValue(TSType type, Space space) {
+		Token token = nextToken();
+		if (token.type == TokenType.OPEN) {
+			//если это составной тип, объявленный через {};
+			if (type.isPrimitive()) throw new UnexpectedTokenException(token,"invalid primitive type declaration {}");
+			TSTypeCompound type_c = ((TSTypeCompound) type);
+
+			TSVar[] values = new TSVar[type_c.getFields().length];
+
+
+
+			token = nextToken();
+			while (true) {
+				//token there = variable name
+				if (token.type != TokenType.TEXT) throw new UnexpectedTokenException(token);
+				String structVarName = token.text;
+				int targetFieldIndex = type_c.getFieldIndex(structVarName);
+				token = nextToken();
+				if (token.type == TokenType.OPERATOR && token.text.equals("=")) {
+					values[targetFieldIndex] = readFieldValue(type_c.getField(targetFieldIndex).getType(),space);
+				} else throw new UnexpectedTokenException(token);
+				token = nextToken();
+				if (token.type == TokenType.CLOSE) break;
+			}
+
+
+
+
+			token = nextToken();
+			if (token.type != TokenType.END) throw new UnexpectedTokenException(token);
+			return new TS_Structure(type_c,values);
+		} else {
+			//if this is one field type
+			if (!type.isOneFieldType()) throw new UnexpectedTokenException(token);
+			TSVar result = type.valueOf(token.text);
+			token = nextToken();
+			if (token.type != TokenType.END) throw new UnexpectedTokenException(token);
+			return result;
+		}
+	}
 	private Token nextToken() {
 		return tokens[counter++];
+	}
+	private Token currentToken() {
+		return tokens[counter];
 	}
 }

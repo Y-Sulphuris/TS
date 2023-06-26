@@ -6,7 +6,7 @@ import org.ts.vars.TS_Structure;
 import java.math.BigInteger;
 import java.util.HashMap;
 
-public final class OverrideTypes {
+public final class OverriddenTypes {
 	public static final TSType<?>[] types = new TSType[128];
 	public static final HashMap<String, TSType<?>> typeNames = new HashMap<>();
 
@@ -44,7 +44,7 @@ public final class OverrideTypes {
 
 
 	private static TS_Structure newStructure(String typename, Object... fieldValues) {
-		return new TS_Structure((TSTypeCompound) OverrideTypes.get(typename),fieldValues);
+		return new TS_Structure((TSTypeCompound) OverriddenTypes.get(typename),fieldValues);
 	}
 
 
@@ -105,7 +105,7 @@ public final class OverrideTypes {
 		return type;
 	}
 	public static TSType get(String name) throws NoTypeDefFoundException{
-		TSType type = typeNames.get(name);
+		TSType<?> type = typeNames.get(name);
 		if (type == null) throw new NoTypeDefFoundException(name);
 		return type;
 	}

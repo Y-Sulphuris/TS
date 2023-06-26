@@ -2,7 +2,6 @@ package org.ts;
 
 import org.ts.types.TSTypeArray;
 import org.ts.types.TSTypePointer;
-import org.ts.vars.TS_Pointer;
 
 public abstract class TSType<T extends TSVar> extends TSComponent {
 

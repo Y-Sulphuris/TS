@@ -17,6 +17,8 @@ public class Main {
 		space.vts("type position {int x; int y;};");
 		space.vts("type [476] /*comment* *test*/ fixedTypeword {position value1;};");
 		space.vts("int a = 4;");
+		space.vts("position pos1 = {y = 3;};");
+		//space.defineVar("pos1",space.getType("position"),3,6);
 		System.out.println(space);
 	}
 }

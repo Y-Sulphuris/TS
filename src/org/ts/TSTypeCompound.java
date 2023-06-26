@@ -11,17 +11,17 @@ public final class TSTypeCompound extends TSType<TS_Structure> {
 		return fields;
 	}
 
-	public TSField getField(int index) {
+	public TSField getField(int index) throws NoFieldDefFoundException {
 		try {
 			return fields[index];
 		} catch (ArrayIndexOutOfBoundsException e) {
 			throw new NoFieldDefFoundException(e);
 		}
 	}
-	public TSField getField(String name) {
+	public TSField getField(String name) throws NoFieldDefFoundException {
 		return fields[getFieldIndex(name)];
 	}
-	public int getFieldIndex(String field_name) {
+	public int getFieldIndex(String field_name) throws NoFieldDefFoundException {
 		for (int i = 0; i< fields.length; i++) {
 			if (fields[i].getName().equals(field_name)) return i;
 		}

@@ -12,7 +12,13 @@ public class TS_Structure extends TSVar implements TSFieldContainer {
 		this.type = type;
 		this.values = new TSVar[type.getFields().length];
 		for (int i = 0; i < values.length; i++) {
-			if (i < fieldValues.length) values[i] = getType().getFields()[i].getType().valueOf(fieldValues[i]);
+			if (i < fieldValues.length && fieldValues[i] != null) {
+				if (fieldValues[i] instanceof TSVar) {
+					values[i] = (TSVar) fieldValues[i];
+				} else {
+					values[i] = getType().getFields()[i].getType().valueOf(fieldValues[i]);
+				}
+			}
 			else values[i] = getType().getFields()[i].getType().defaultValue();
 		}
 

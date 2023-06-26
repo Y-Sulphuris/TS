@@ -3,7 +3,6 @@ package org.ts.types;
 import org.ts.CannotCastVarException;
 import org.ts.TSType;
 import org.ts.vars.TS_fword;
-import org.ts.vars.TS_octet;
 
 public final class TSType_fword extends TSType<TS_fword> {
 	public static final int TYPEWORD = 4;

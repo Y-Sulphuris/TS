@@ -1,6 +1,5 @@
 package org.ts;
 
-import org.ts.types.TSTypePointer;
 import org.ts.vars.TS_Structure;
 import org.ts.vts.TokenReader;
 
@@ -55,7 +54,7 @@ public final class Space implements TSFieldContainer {
 	public TSType<?> getType(String typename) throws NoTypeDefFoundException{
 		TSComponent component = components.get(typename);
 		if (component == null) {
-			component = OverrideTypes.get(typename);
+			component = OverriddenTypes.get(typename);
 		} else if (!(component instanceof TSType)) {
 			throw new NoTypeDefFoundException(typename);
 		}
@@ -214,7 +213,7 @@ public final class Space implements TSFieldContainer {
 			for (TSField currentField : ((TSTypeCompound) field.getType()).getFields()) {
 				try {
 					TSFieldContainer varContainer = (TSFieldContainer)(field.get(container));
-					builder.append(fieldToString(currentField, varContainer,prefix+"\t")).append("\n");
+					builder.append(fieldToString(currentField, varContainer,prefix+"\t"));
 				} catch (ClassCastException e) {
 					throw new AssertionError(e);
 				}
@@ -222,7 +221,7 @@ public final class Space implements TSFieldContainer {
 			}
 			builder.append(prefix).append("};\n");
 		} else if (field.getType().isOneFieldType()) {
-			builder.append(container.getValue(field).toString()).append(";");
+			builder.append(container.getValue(field).toString()).append(";\n");
 		}
 
 		return builder.toString();

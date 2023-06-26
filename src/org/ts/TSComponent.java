@@ -11,7 +11,7 @@ public abstract class TSComponent {
 		ByteBuffer buffer = ByteBuffer.allocate(size());
 		return buffer.array();
 	}
-	//throws UnsafeLinkError if not override
+	//throws UnsafeLinkError if it's overridden
 	public native void getBytes(ByteBuffer buffer);
 
 	public abstract int size();

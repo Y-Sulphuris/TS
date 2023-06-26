@@ -3,14 +3,18 @@ package org.ts.types;
 import org.ts.TSType;
 import org.ts.TSVar;
 import org.ts.vars.TS_Array;
-import org.ts.vars.TS_Pointer;
 
 import java.util.HashMap;
 
 public class TSTypeArray<T extends TSVar> extends TSType<TS_Array<T>> {
+	/**
+	 * All created array types (create automatically)
+	 */
+	private static final HashMap<TSType<?>, TSTypeArray<?>> targetTypes = new HashMap<>();
 
-	private static final HashMap<TSType<?>, TSTypeArray> targetTypes = new HashMap<>();
-
+	/**
+	 * Type of array elements
+	 */
 	private final TSType<T> target;
 
 	private TSTypeArray(TSType<T> target) {
@@ -18,9 +22,14 @@ public class TSTypeArray<T extends TSVar> extends TSType<TS_Array<T>> {
 		this.target = target;
 	}
 
+	/**
+	 * Find an array type for target, if it does not exist, create it and cache to {@link TSTypeArray#targetTypes}
+	 * @param target type of array elements
+	 * @return array type for given target type
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends TSVar> TSTypeArray<T> forParent(TSType<T> target) {
-		TSTypeArray<T> type = targetTypes.get(target);
+		TSTypeArray<T> type = (TSTypeArray<T>)targetTypes.get(target);
 		if (type == null) {
 			type = new TSTypeArray<>(target);
 			targetTypes.put(target, type);
@@ -28,6 +37,9 @@ public class TSTypeArray<T extends TSVar> extends TSType<TS_Array<T>> {
 		return type;
 	}
 
+	/**
+	 * @return type of array elements
+	 */
 	public TSType<?> getTargetType() {
 		return target;
 	}
