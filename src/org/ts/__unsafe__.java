@@ -55,7 +55,7 @@ public final class __unsafe__ {
 
 	public boolean assertion(boolean b) {
 		if (!b) throw new AssertionError();
-		return b;
+		return true;
 	}
 
 }

@@ -3,6 +3,9 @@ package org.ts;
 import org.ts.vts.Token;
 
 public class UnexpectedTokenException extends RuntimeException{
+	public UnexpectedTokenException(Token token, String msg, Throwable cause) {
+		this(String.valueOf(token) + ": " + msg, cause);
+	}
 	public UnexpectedTokenException(Token token, String msg) {
 		this(String.valueOf(token) + ": " + msg);
 	}

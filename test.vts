@@ -1,6 +1,6 @@
 #head
 
-@include<lib/gdx>
+//@include<lib/gdx>
 
 #defstart
 
@@ -19,7 +19,7 @@ type [131] player {
 type item {
 	unsigned_byte id;
 	unsigned_short meta;
-	
+
 	unsigned_int amount;
 	struct<tmdf> tag;
 };
@@ -39,3 +39,7 @@ item test {
 		string8 displayname = "displayNameTest";
 	};
 }
+
+
+byte[] a2 = (1,4,2,6,4,9);
+byte[]* p_a2 = &a2;

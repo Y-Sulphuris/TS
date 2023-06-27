@@ -1,6 +1,8 @@
 package test;
 
 import org.ts.*;
+import org.ts.vars.TS_Array;
+import org.ts.vars.TS_Structure;
 
 public class Main {
 	public static void main(String[] args) {
@@ -17,7 +19,15 @@ public class Main {
 		space.vts("type position {int x; int y;};");
 		space.vts("type [476] /*comment* *test*/ fixedTypeword {position value1;};");
 		space.vts("int a = 4;");
-		space.vts("position pos1 = {y = 3;};");
+		space.vts("position pos1 = (3,6);");
+
+		//TS_Array<TS_Structure> array1 = new TS_Array<>(OverriddenTypes.ts_byte,16);
+		//array1.set(3,OverriddenTypes.ts_byte.valueOf(5));
+		//space.defineVar("array1",array1);
+
+		space.vts("byte[] array1 = {3,6,9,7,3};");
+		space.vts("int[][] array2 = {{3},{6,7},{9,3,1},{7},{3}};");
+
 		//space.defineVar("pos1",space.getType("position"),3,6);
 		System.out.println(space);
 	}

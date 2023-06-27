@@ -18,7 +18,7 @@ public class TSTypeArray<T extends TSVar> extends TSType<TS_Array<T>> {
 	private final TSType<T> target;
 
 	private TSTypeArray(TSType<T> target) {
-		super("__Array__("+target.getTypeName()+")", 0);
+		super(target.getTypeName()+"[]", 0);
 		this.target = target;
 	}
 

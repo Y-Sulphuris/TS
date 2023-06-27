@@ -1,5 +1,6 @@
 package org.ts.vts;
 
+import org.ts.Space;
 import org.ts.__unsafe__;
 
 import java.io.File;
@@ -15,6 +16,9 @@ public class TSCompiler {
 		//String source = "unsigned_int a = u16;";
 		TSCompiler compiler = new TSCompiler(new File("test.vts"));
 		System.out.println(Arrays.toString(compiler.tokenize()));
+		Space space = new Space();
+		space.vts(readAllLines(new File("test.vts")));
+		System.out.println(space);
 	}
 
 	private Token[] tokenize() {
@@ -56,6 +60,7 @@ public class TSCompiler {
 		for (Token token : tokens) {
 			if (token.type == TokenType.DIRECT) {
 				if (token.text.equals("#head")) {
+					//todo
 				}
 			}
 		}

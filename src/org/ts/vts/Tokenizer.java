@@ -9,6 +9,7 @@ public class Tokenizer {
 
 	private final String source;
 	int counter = 0;
+	int current_line = 1;
 
 	public Tokenizer(String source) {
 		this.source = source;
@@ -31,6 +32,7 @@ public class Tokenizer {
 		char ch = nextChar();
 		//skip
 		while (ch == ' ' || ch == '\n' || ch == '\t') {
+			if (ch == '\n') current_line++;
 			ch = nextChar();
 		}
 		//comments
@@ -55,8 +57,11 @@ public class Tokenizer {
 		}
 		//skip after comments
 		while (ch == ' ' || ch == '\n' || ch == '\t') {
+			if (ch == '\n') current_line++;
 			ch = nextChar();
 		}
+
+
 		if (ch == '#') {
 			StringBuilder builder = new StringBuilder();
 			do {
@@ -65,8 +70,11 @@ public class Tokenizer {
 			} while (containsChar(validNameCharacters,ch));
 			counter--;
 			String res = builder.toString();
-			return new Token(TokenType.DIRECT, res);
+			return new Token(TokenType.DIRECT, res,current_line);
 		}
+
+
+
 		try {
 			if (containsChar(numbers, ch) || ch == 'u') {
 				if (ch == 'u') {
@@ -90,9 +98,10 @@ public class Tokenizer {
 				if (containsCharCase(numberPostfix,ch))
 					builder.append(ch);
 				else counter--;
-				return new Token(TokenType.NUMBER,builder.toString());
+				return new Token(TokenType.NUMBER,builder.toString(),current_line);
 			}
 		} catch (GOTOThrowable ignored) {}
+
 		if (containsChar(validNameCharacters,ch)) {
 			StringBuilder builder = new StringBuilder();
 			do {
@@ -101,10 +110,23 @@ public class Tokenizer {
 			} while (containsChar(validNameCharacters,ch));
 			counter--;
 			String res = builder.toString();
-			return new Token(isKeyword(res) ? TokenType.KEYWORD : TokenType.TEXT, res);
+			return new Token(isKeyword(res) ? TokenType.KEYWORD : TokenType.TEXT, res,current_line);
 		}
+
+		//string literals
+		if (ch == '"') {
+			StringBuilder builder = new StringBuilder();
+			do {
+				builder.append(ch);
+				ch = nextChar();
+			} while (ch != '"');
+			counter--;
+			String res = builder.toString();
+			return new Token(TokenType.TEXT,res,current_line);
+		}
+
 		if (containsChar(operators,ch) || ch == '.') {
-			return new Token(TokenType.OPERATOR,ch);
+			return new Token(TokenType.OPERATOR,ch,current_line);
 		}
 		TokenType type;
 		switch (ch) {
@@ -133,9 +155,9 @@ public class Tokenizer {
 				type = TokenType.EOF;
 				break;
 			default:
-				throw new UnexpectedTokenException(new Token(TokenType.ERROR,"Unexpected token '" + ch + "' at " + counter));
+				throw new UnexpectedTokenException(new Token(TokenType.ERROR,"Unexpected token '" + ch + "' at " + counter,current_line));
 		}
-		return new Token(type,ch);
+		return new Token(type,ch,current_line);
 	}
 
 
@@ -159,7 +181,7 @@ public class Tokenizer {
 	private static final String binaryNumbers = "01";
 	private static final String validNameCharacters = "abcdefghijklmnopqrstuvwxyz_"+numbers;
 	private static final String numberPostfix = "bsilLfdDC";
-	private static final String operators = "=*&";
+	private static final String operators = "=*&+<>,\"";
 	public static final String[] keywords = {
 			"type",
 			"static",
@@ -167,6 +189,9 @@ public class Tokenizer {
 			"struct",
 			"null",
 
+
+			//а почему закомментировано
+			//нипонял
 			/*"void",
 			"octet",
 			"word",

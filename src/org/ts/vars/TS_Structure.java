@@ -21,7 +21,10 @@ public class TS_Structure extends TSVar implements TSFieldContainer {
 			}
 			else values[i] = getType().getFields()[i].getType().defaultValue();
 		}
-
+	}
+	public TS_Structure(TSTypeCompound type, TSVar[] values) {
+		this.type = type;
+		this.values = values.clone();
 	}
 
 

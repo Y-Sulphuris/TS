@@ -6,6 +6,8 @@ import org.ts.TSTypeCompound;
 import org.ts.types.*;
 import org.ts.TSVar;
 
+import java.util.Arrays;
+
 /**
  * @param <T> TSVar type of array element
  */
@@ -15,6 +17,15 @@ public class TS_Array<T extends TSVar> extends TSVar {
 	private final TSType<T> targetType;
 	public T[] getElements() {
 		return elements;
+	}
+	public void set(int index, Object value) {
+		set(index,targetType.valueOf(value));
+	}
+	public void set(int index, T value) {
+		this.elements[index] = value;
+	}
+	public T get(int index) {
+		return this.elements[index];
 	}
 	public TSType<T> getTargetType() {
 		return targetType;
@@ -28,12 +39,15 @@ public class TS_Array<T extends TSVar> extends TSVar {
 	public TS_Array(TSType<T> type, T... elements) {
 		targetType = type;
 		this.elements = elements;
-		lengthSize = length() > 0xFF ? (length() > 0xFFFF ? 4 : 2) : 1;
+		lengthSize = length() > 0xFF ? (length() > 0xFFFF ? 4 : 2) : 1;//длинна варьируется, от этого зависит meta итогового типа (см. спецификацию)
 		this.type = TSTypeArray.forParent(type);
 	}
 	@SuppressWarnings("unchecked")
 	public TS_Array(TSType<T> type, int length) {
-		this(type,(T[])new TSVar[length]);
+		this(type,(T[])(type instanceof TSTypeCompound ? new TS_Structure[length] : new TSVar[length]));
+		for (int i = 0; i < elements.length; i++) {
+			elements[i] = targetType.defaultValue();
+		}
 	}
 
 	private final int lengthSize;
@@ -50,10 +64,16 @@ public class TS_Array<T extends TSVar> extends TSVar {
 	}
 
 	@Override
-	public Object getValue() {
+	public T[] getValue() {
 		return elements;
 	}
 
+	@Override
+	public String toString() {
+		return Arrays.deepToString(elements)
+				.replace("[","{")
+				.replace("]","}");
+	}
 
 	/**
 	 * Create an array from primitive type (converts byte[] to ts::octet[])

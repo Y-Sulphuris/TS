@@ -79,7 +79,7 @@ public final class OverriddenTypes {
 		registerOneFieldCompoundType("achar",               31, TSType_octet.TYPEWORD);
 		registerOneFieldCompoundType("char8",               32, TSType_octet.TYPEWORD);
 		registerOneFieldCompoundType("char16",              33, TSType_word.TYPEWORD);
-		registerCompoundType(        "astring",             34,new TSField(get(31),""));
+		registerCompoundType(        "astring",             34,new TSField(get(31),""));//todo: make it array
 		registerCompoundType(        "string8",             35,new TSField(get(32),""));
 		registerCompoundType(        "string16",            36,new TSField(get(33),""));
 	}
@@ -111,4 +111,35 @@ public final class OverriddenTypes {
 	}
 
 
+
+
+	public static final TSType_octet    octet  = (TSType_octet) get(TSType_octet.TYPEWORD);
+	public static final TSType_word     word   = (TSType_word)  get(TSType_word.TYPEWORD);
+	public static final TSType_dword    dword  = (TSType_dword) get(TSType_dword.TYPEWORD);
+	public static final TSType_fword    fword  = (TSType_fword) get(TSType_fword.TYPEWORD);
+	public static final TSType_qword    qword  = (TSType_qword) get(TSType_qword.TYPEWORD);
+	public static final TSType_tword    tword  = (TSType_tword) get(TSType_tword.TYPEWORD);
+	public static final TSType_dqword   dqword = (TSType_dqword) get(TSType_dqword.TYPEWORD);
+
+	public static final TSTypeCompound
+			ts_byte = (TSTypeCompound) get(17),
+			ts_unsigned_byte = (TSTypeCompound) get(18),
+			ts_short = (TSTypeCompound) get(19),
+			ts_unsigned_short = (TSTypeCompound) get(20),
+			ts_int = (TSTypeCompound) get(21),
+			ts_unsigned_int = (TSTypeCompound) get(22),
+			ts_long = (TSTypeCompound) get(23),
+			ts_unsigned_long = (TSTypeCompound) get(24),
+			ts_float = (TSTypeCompound) get(25),
+			ts_double = (TSTypeCompound) get(26),
+			ts_long_long = (TSTypeCompound) get(27),
+			ts_unsigned_long_long = (TSTypeCompound) get(28),
+			ts_long_double = (TSTypeCompound) get(29),
+			ts_decimal = (TSTypeCompound) get(30),
+			ts_achar = (TSTypeCompound) get(31),
+			ts_char8 = (TSTypeCompound) get(32),
+			ts_char16 = (TSTypeCompound) get(33),
+			ts_astring = (TSTypeCompound) get(34),
+			ts_string8 = (TSTypeCompound) get(35),
+			ts_string16 = (TSTypeCompound) get(36);
 }
